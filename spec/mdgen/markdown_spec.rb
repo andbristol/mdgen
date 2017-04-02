@@ -1,19 +1,19 @@
 describe MDGen::Markdown do
-  describe '#atx_header' do
+  describe '#header' do
     HEADERS = [
-      '# foo bar',
-      '## foo bar',
-      '### foo bar',
-      '#### foo bar',
-      '##### foo bar',
-      '###### foo bar'
+      "# foo bar\n",
+      "## foo bar\n",
+      "### foo bar\n",
+      "#### foo bar\n",
+      "##### foo bar\n",
+      "###### foo bar\n"
     ]
 
     HEADERS.each_with_index do |header, index|
       level = index + 1
 
       it "makes a header for level #{level}" do
-        expect(MDGen::Markdown.atx_header(level, 'foo bar')).to eq(header)
+        expect(MDGen::Markdown.header(level, 'foo bar')).to eq(header)
       end
     end
   end
@@ -23,7 +23,7 @@ describe MDGen::Markdown do
       expect(MDGen::Markdown.ul).to eq('')
     end
 
-    text = <<EOF.chomp
+    text = <<EOF
 * one
 * two
 * three
@@ -39,7 +39,7 @@ EOF
       expect(MDGen::Markdown.ol).to eq('')
     end
 
-    text = <<EOF.chomp
+    text = <<EOF
 1. one
 2. two
 3. three
@@ -58,7 +58,7 @@ EOF
 
   describe '#code' do
 
-    empty_block = <<EOF.chomp
+    empty_block = <<EOF
 ```
 
 ```
@@ -67,7 +67,7 @@ EOF
       expect(MDGen::Markdown.code).to eq(empty_block)
     end
 
-    block = <<EOF.chomp
+    block = <<EOF
 ```
 foo bar
 ```
@@ -77,7 +77,7 @@ EOF
       expect(MDGen::Markdown.code('foo bar')).to eq(block)
     end
 
-    highlight_block = <<EOF.chomp
+    highlight_block = <<EOF
 ```ruby
 puts 'foo bar'
 ```

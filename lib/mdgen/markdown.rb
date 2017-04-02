@@ -1,25 +1,30 @@
 module MDGen
   module Markdown
 
+    include Table
+
     extend self
+
+    HEADER_LEVEL_RANGE = (1..6)
 
     # block elements
 
     def raw(text = '')
       text
     end
-    alias_method :p, :raw
 
-    def atx_header(level, text = '')
-      "#{'#' * level} #{text}"
+    def p(text = '')
+      "#{text}\n"
     end
 
-    def setext_title(text = '')
-      "#{text}\n======"
+    def header(level, text = '')
+      "#{'#' * level} #{text}\n"
     end
 
-    def setext_subhead(text = '')
-      "#{text}\n------"
+    HEADER_LEVEL_RANGE.each do |level|
+      define_method(('h' * level).to_sym) do |text|
+        header(level, text)
+      end
     end
 
     def quote(text = '')
@@ -27,21 +32,21 @@ module MDGen
     end
 
     def ul(items = [])
-      items.map { |item| "* #{item}" }.join("\n")
+      items.map { |item| "* #{item}\n" }.join
     end
     alias_method :list, :ul
 
     def ol(items = [])
-      items.each_with_index.map { |item, index| "#{index + 1}. #{item}"}.join("\n")
+      items.each_with_index.map { |item, index| "#{index + 1}. #{item}\n"}.join
     end
 
     def code(text = '', decoration = '')
-      "```#{decoration}\n#{text}\n```"
+      "```#{decoration}\n#{text.chomp}\n```\n"
     end
     alias_method :pre, :code
 
     def rule
-      '* * *'
+      "* * *\n"
     end
 
     # span elements
