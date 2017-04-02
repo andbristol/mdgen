@@ -1,5 +1,7 @@
 # mdgen
 
+**Work in progress, more coming soon**
+
 This is a library for generating Markdown documents in Ruby. If your project emits Markdown, you've probably written some methods like these somewhere
 
 ```ruby
