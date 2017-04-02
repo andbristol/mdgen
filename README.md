@@ -1,10 +1,10 @@
-# mdgen
+# MDGen
 
-MDGen is a library for generating Markdown documents in Ruby. If your project needs to emit Markdown, you've probably written some methods like this somewhere
+This is a library for generating Markdown documents in Ruby. If your project emits Markdown, you've probably written some methods like these somewhere
 
 ```ruby
 def header(text)
-  "# " + text
+  "# #{text}"
 end
 
 def link(text, url)
