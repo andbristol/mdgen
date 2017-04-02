@@ -11,14 +11,14 @@ describe MDGen::Markdown::Table do
       *table
     ]
 
-    header_rendered = <<EOF.chomp
+    header_rendered = <<EOF
 | strings  | keywords  | the longest field |
 | -------- | --------- | ----------------- |
 | apple    | artichoke | 1                 |
 | bronson  | boy       | 2                 |
 | caramels | briar     | 99999             |
 EOF
-    no_header_rendered = <<EOF.chomp
+    no_header_rendered = <<EOF
 |          |           |       |
 | -------- | --------- | ----- |
 | apple    | artichoke | 1     |
@@ -41,7 +41,7 @@ EOF
       []
     ]
 
-    missing_cells_rendered = <<EOF.chomp
+    missing_cells_rendered = <<EOF
 |          |           |   |
 | -------- | --------- | - |
 | apple    | artichoke |   |
@@ -55,7 +55,7 @@ EOF
     end
 
     alignment = [:right, :left, :center]
-    alignment_rendered = <<EOF.chomp
+    alignment_rendered = <<EOF
 | strings  | keywords  | the longest field |
 | --------:|:--------- |:-----------------:|
 | apple    | artichoke | 1                 |

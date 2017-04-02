@@ -14,12 +14,5 @@ module MDGen
         @elements << Markdown.public_send(method, *args)
       end
     end
-
-    def self.build(renderer, &block)
-      raise ArgumentError, 'Must pass a block' unless block
-      dsl = self.new
-      dsl.instance_eval(&block)
-      dsl.elements.join("\n")
-    end
   end
 end

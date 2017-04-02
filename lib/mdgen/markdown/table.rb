@@ -59,7 +59,7 @@ module MDGen
           else
             rule_row = "| #{rules.join(' | ')} |"
           end
-        [header_row, rule_row, *rendered_rows].join("\n")
+        [header_row, rule_row, *rendered_rows].join("\n") + "\n"
       end
     end
   end
