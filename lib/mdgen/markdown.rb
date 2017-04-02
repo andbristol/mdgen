@@ -1,6 +1,8 @@
 module MDGen
   module Markdown
 
+    include Table
+
     extend self
 
     # block elements
