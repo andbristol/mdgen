@@ -1,5 +1,5 @@
 describe MDGen do
-  describe '#md' do
+  describe '#document' do
 
     it 'generates markdown' do
       expected = <<EOF
@@ -48,12 +48,12 @@ How about an ordered list
 
 ###### Sixth subhead
 
-[links are a little broken](http://example.com)
-![images too](http://example.com)
-We'll fix them
+links are an [inline element](http://example.com) in this part
+
+images are inline ![an image](http://example.com) elements too
 EOF
 
-      actual = MDGen.md do
+      actual = MDGen.document do
         h 'The title'
 
         p 'Once upon a time'
@@ -104,10 +104,37 @@ EOF
 
         hhhhhh 'Sixth subhead'
 
-        link 'links are a little broken', 'http://example.com'
-        image 'images too', 'http://example.com'
+        p "links are an #{link('inline element', 'http://example.com')} in this part"
+        p "images are inline #{image('an image', 'http://example.com')} elements too"
+      end
 
-        p "We'll fix them"
+      expect(actual).to eq(expected)
+    end
+  end
+
+  describe '#md' do
+
+    expected = <<EOF
+# the title
+
+A paragraph with some text
+
+* one
+* two
+* three
+EOF
+
+    it 'exposes markdown methods inside the block' do
+
+      actual = ''
+      elements = ['one', 'two', 'three']
+
+      MDGen.md do
+        actual << h('the title')
+        actual << "\n"
+        actual << p('A paragraph with some text')
+        actual << "\n"
+        actual << list(elements)
       end
 
       expect(actual).to eq(expected)

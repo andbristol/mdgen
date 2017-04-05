@@ -1,18 +1,35 @@
 module MDGen
-  class DSL
+  module DSL
 
-    MARKDOWN_METHODS = %i(h hh hhh hhhh hhhhh hhhhhh raw p quote list ul ol code pre rule table link image).freeze
+    BLOCK_ELEMENTS = %i(h hh hhh hhhh hhhhh hhhhhh raw p quote list ul ol code pre rule table).freeze
+    SPAN_ELEMENTS = %i(link image).freeze
+    MARKDOWN_METHODS = (BLOCK_ELEMENTS + SPAN_ELEMENTS).freeze
 
-    attr_reader :elements
+    class Basic
 
-    def initialize
-      @elements = []
+      extend Forwardable
+
+      def_delegators Markdown, *MARKDOWN_METHODS
     end
 
-    MARKDOWN_METHODS.each do |method|
-      define_method(method) do |*args|
-        @elements << Markdown.public_send(method, *args)
+    class Document
+
+      extend Forwardable
+
+      attr_reader :elements
+
+      def_delegators Markdown, *SPAN_ELEMENTS
+
+      def initialize
+        @elements = []
+      end
+
+      BLOCK_ELEMENTS.each do |method|
+        define_method(method) do |*args|
+          @elements << Markdown.public_send(method, *args)
+        end
       end
     end
+
   end
 end
