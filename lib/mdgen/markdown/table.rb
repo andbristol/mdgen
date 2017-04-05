@@ -4,14 +4,8 @@ module MDGen
 
       extend self
 
-      # TODO refactor this method
       def table(rows, header: true, alignment: nil)
         max_row_size = rows.map(&:length).max
-
-        # if alignment.length != max_row_size
-        #  raise ArgumentError, "Given only #{alignment.length} alignments for #{max_row_size} rows"
-        # end
-        # TODO validate alignments
 
         rows.each do |row|
           if row.length < max_row_size
@@ -25,6 +19,16 @@ module MDGen
           rows.unshift(empty_row)
         end
 
+        rendered_rows, column_lengths = render_rows(rows)
+
+        header_row = rendered_rows.shift
+        rule_row = rule_row(column_lengths, alignment: alignment)
+        [header_row, rule_row, *rendered_rows].join("\n") + "\n"
+      end
+
+      private
+
+      def render_rows(rows)
         rows_s = rows.map do |row|
           row.map(&:to_s)
         end
@@ -40,27 +44,29 @@ module MDGen
           "| #{padded.join(' | ')} |"
         end
 
-        header_row = rendered_rows.shift
-        rules = column_lengths.map { |length| '-' * length}
-        rule_row =
-          if alignment
-            rule_row = rules.zip(alignment).reduce('|') do |partial, column|
-              rule, alignment = column
-              next_cell = case alignment
-              when :left
-                ":#{rule} |"
-              when :right
-                " #{rule}:|"
-              when :center
-                ":#{rule}:|"
-              end
-              partial + next_cell
-            end
-          else
-            rule_row = "| #{rules.join(' | ')} |"
-          end
-        [header_row, rule_row, *rendered_rows].join("\n") + "\n"
+        [rendered_rows, column_lengths]
       end
+
+      def rule_row(column_lengths, alignment: nil)
+        rules = column_lengths.map { |length| '-' * length}
+        if alignment
+          rules.zip(alignment).reduce('|') do |partial, column|
+            rule, alignment = column
+            next_cell = case alignment
+            when :left
+              ":#{rule} |"
+            when :right
+              " #{rule}:|"
+            when :center
+              ":#{rule}:|"
+            end
+            partial + next_cell
+          end
+        else
+          "| #{rules.join(' | ')} |"
+        end
+      end
+
     end
   end
 end
