@@ -229,7 +229,7 @@ MDGen::Markdown.image('example', 'http://example.com/image.jpg', 'my title')
   # => '![example](http://example.com/image.jpg "my title")'
 ```
 
-### Raw text - #Raw
+### Raw text - #raw
 
 Use this when you want to insert text without any changes when using `MDGen.document`. Acts as the identity function.
 
