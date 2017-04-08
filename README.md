@@ -158,7 +158,7 @@ Supports optional syntax highlighting. Also has the alias `pre`
 ```ruby
 text = "puts 'foo'"
 MDGen::Markdown.code(text, 'ruby')
-  # => '\`\`\`ruby\nputs 'foo'\n\`\`\`'
+  # => '```ruby\nputs 'foo'\n```'
 ```
 
 ### Horizontal rule - #rule
