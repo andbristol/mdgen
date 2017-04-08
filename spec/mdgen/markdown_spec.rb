@@ -50,6 +50,30 @@ EOF
     end
   end
 
+  describe '#task_list' do
+    tasks = [
+      ['walk dog', true],
+      ['take out trash', true],
+      ['get groceries', false],
+      ['do laundry', true]
+    ]
+
+    list = <<EOF
+- [x] walk dog
+- [x] take out trash
+- [ ] get groceries
+- [x] do laundry
+EOF
+
+    it 'makes an empty list' do
+      expect(MDGen::Markdown.task_list).to eq('')
+    end
+
+    it 'makes a list with tasks' do
+      expect(MDGen::Markdown.task_list(tasks)).to eq(list)
+    end
+  end
+
   describe '#link' do
     it 'makes a link' do
       expect(MDGen::Markdown.link('a real site', 'http://example.com')).to eq("[a real site](http://example.com)")

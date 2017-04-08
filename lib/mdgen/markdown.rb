@@ -40,6 +40,16 @@ module MDGen
       items.each_with_index.map { |item, index| "#{index + 1}. #{item}\n"}.join
     end
 
+    def task_list(items = [])
+      items.map do |text, checked|
+        if checked
+          "- [x] #{text}\n"
+        else
+          "- [ ] #{text}\n"
+        end
+      end.join
+    end
+
     def code(text = '', decoration = '')
       "```#{decoration}\n#{text.chomp}\n```\n"
     end

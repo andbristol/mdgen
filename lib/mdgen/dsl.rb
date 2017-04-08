@@ -1,7 +1,7 @@
 module MDGen
   module DSL
 
-    BLOCK_ELEMENTS = %i(h hh hhh hhhh hhhhh hhhhhh raw p quote list ul ol code pre rule table).freeze
+    BLOCK_ELEMENTS = %i(h hh hhh hhhh hhhhh hhhhhh raw p quote list ul ol task_list code pre rule table).freeze
     SPAN_ELEMENTS = %i(link image).freeze
     MARKDOWN_METHODS = (BLOCK_ELEMENTS + SPAN_ELEMENTS).freeze
 
